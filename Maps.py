@@ -174,7 +174,7 @@ with (main_cl):
                         df1,
                         columns=['lat', 'lon'])
 
-                    bubbletext = [{"text":"2142","lat":-3.47,"lon":106}]
+                    bubbletext = [{"text":"2142","lat":-3.47,"lon":105.89}]
 
 
                     st.pydeck_chart(pdk.Deck(
