@@ -129,7 +129,7 @@ with (main_cl):
                     # hover_name="prov",  # Display count on hover
                     color_discrete_sequence=["#5BA3CF"],  # Customize bubble color
                     height=600,
-                    zoom=7,
+                    zoom=6,
                     center=dict(lat=-2.9357, lon=104.4177),  # this will center on the point
                 )
 
