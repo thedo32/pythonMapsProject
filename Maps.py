@@ -318,6 +318,32 @@ with (main_cl):
             };
             """
 
+            # draw map
+            m = folium.Map(location=[-2.9831, 104.7527],
+                           tiles='cartodbdarkmatter',
+                           zoom_start=7,
+                           control_scale=True)
+            # Add marker cluster to map
+            points = gpd.read_file('maps/palembang50.min.topojson')
+            # Get x and y coordinates for each point
+            # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+            # points_gjson.add_to(m)
+
+            # Get x and y coordinates for each point
+            points["x"] = points["geometry"].x
+            points["y"] = points["geometry"].y
+
+            # Create a list of coordinate pairs
+            locations = list(zip(points["y"], points["x"]))
+
+            # Create a folium marker cluster
+            fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
+
+            fast_marker_cluster.add_to(m)
+
+            # draw maps
+            st_folium(m, height=450, use_container_width=True)
+
 
             col1, col2 = st.columns([1,1])
             with col1:
