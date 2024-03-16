@@ -318,13 +318,6 @@ with (main_cl):
             };
             """
 
-            # draw map
-            m = folium.Map(location=[-3.1940, 117.5540],
-                               tiles = 'cartodbdarkmatter',
-                               zoom_start=2,
-                               control_scale=True)
-
-
 
             col1, col2 = st.columns([1,1])
             with col1:
@@ -338,36 +331,75 @@ with (main_cl):
                                    control_scale=True)
                 # Add marker cluster to map
                 points = gpd.read_file('maps/palembang50.min.topojson')
+                # Get x and y coordinates for each point
+                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+                # points_gjson.add_to(m)
+
+                # Get x and y coordinates for each point
+                points["x"] = points["geometry"].x
+                points["y"] = points["geometry"].y
+
+                # Create a list of coordinate pairs
+                locations = list(zip(points["y"], points["x"]))
+
+                # Create a folium marker cluster
+                fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
+
+                fast_marker_cluster.add_to(m)
+
+                # draw maps
+                st_folium(m, height=450, use_container_width=True)
+
             if values == "Provinsi Sumsel":
                 m = folium.Map(location=[-2.9357, 104.4177],
                                    tiles='cartodbdarkmatter',
                                    zoom_start=5,
                                    control_scale=True)
                 points = gpd.read_file('maps/sumsel.min.topojson')
+                # Get x and y coordinates for each point
+                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+                # points_gjson.add_to(m)
+
+                # Get x and y coordinates for each point
+                points["x"] = points["geometry"].x
+                points["y"] = points["geometry"].y
+
+                # Create a list of coordinate pairs
+                locations = list(zip(points["y"], points["x"]))
+
+                # Create a folium marker cluster
+                fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
+
+                fast_marker_cluster.add_to(m)
+
+                # draw maps
+                st_folium(m, height=450, use_container_width=True)
+
             if values == "Indonesia":
+                # draw map
+                m = folium.Map(location=[-3.1940, 117.5540],
+                               tiles='cartodbdarkmatter',
+                               zoom_start=2,
+                               control_scale=True)
                 points = gpd.read_file('maps/idns.min.topojson')
+                # Get x and y coordinates for each point
+                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+                # points_gjson.add_to(m)
 
+                # Get x and y coordinates for each point
+                points["x"] = points["geometry"].x
+                points["y"] = points["geometry"].y
 
-            # Get x and y coordinates for each point
-            # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
-            # points_gjson.add_to(m)
+                # Create a list of coordinate pairs
+                locations = list(zip(points["y"], points["x"]))
 
-            # Get x and y coordinates for each point
-            points["x"] = points["geometry"].x
-            points["y"] = points["geometry"].y
+                # Create a folium marker cluster
+                fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
 
-            # Create a list of coordinate pairs
-            locations = list(zip(points["y"], points["x"]))
+                fast_marker_cluster.add_to(m)
 
-            # Create a folium marker cluster
-            fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
-
-            fast_marker_cluster.add_to(m)
-
-
-            # draw maps
-            st_folium(m,height=450, use_container_width=True)
-
+                # draw maps
+                st_folium(m, height=450, use_container_width=True)
 
         with st.expander("Analisis Peta"):
             st.markdown("Tampilan peta ini menggunakan tiga library yang berbeda, yaitu Pyplot yang loadingnya cepat, namun tampilan petanya kurang atraktif dan kurang interaktif "
