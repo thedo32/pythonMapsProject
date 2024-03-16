@@ -372,7 +372,7 @@ with (main_cl):
         with st.expander("Analisis Peta"):
             st.markdown("Tampilan peta ini menggunakan tiga library yang berbeda, yaitu Pyplot yang loadingnya cepat, namun tampilan petanya kurang atraktif dan kurang interaktif "
                         "kemudian Altair Pydeck yang performanya menengah, kemudian yang paling lama loadingnya tapi paling interaktif adalah Folium. "
-                        "Sebagai informasi terkait, data Pyplot menggunakan format csv, lalau format topojson untuk Altair Pydeck dan Folium untuk "
+                        "Sebagai informasi terkait, data Pyplot menggunakan format csv, lalau format topojson untuk Altair Pydeck dan Folium. "
                         "Untuk sebaran hotspot dapat dilihat :blue[disekitar Kota Palembang terdapat cukup banyak hotspot],"
                      "juga kalau kita melihat ke wilayah Provinsi Sumatera Selatan, sebaran hotspot terdapat lebih banyak di "
                      ":blue[bagian tenggara provinsi dan tidak jauh dari ibu kota provinsi tersebut]. "
