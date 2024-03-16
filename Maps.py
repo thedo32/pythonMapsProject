@@ -324,43 +324,45 @@ with (main_cl):
                                zoom_start=2,
                                control_scale=True)
 
-            col1, col2 = st.columns([1,1])
-            with col1:
-                values = st.select_slider(
+
+            if st.checkbox("Tampilkan Hotspot",value=False):
+                col1, col2 = st.columns([1,1])
+                with col1:
+                    values = st.select_slider(
                         'Pilih Wilayah Administrasi Folium', options=["Kota Palembang", "Provinsi Sumsel", "Indonesia"])
-            if values == "Kota Palembang":
-                # draw map
-                m = folium.Map(location=[-2.9831,104.7527],
+                if values == "Kota Palembang":
+                    # draw map
+                    m = folium.Map(location=[-2.9831,104.7527],
                                    tiles='cartodbdarkmatter',
                                    zoom_start=7,
                                    control_scale=True)
-                # Add marker cluster to map
-                points = gpd.read_file('maps/palembang50.min.topojson')
-            if values == "Provinsi Sumsel":
-                m = folium.Map(location=[-2.9357, 104.4177],
+                    # Add marker cluster to map
+                    points = gpd.read_file('maps/palembang50.min.topojson')
+                if values == "Provinsi Sumsel":
+                    m = folium.Map(location=[-2.9357, 104.4177],
                                    tiles='cartodbdarkmatter',
                                    zoom_start=5,
                                    control_scale=True)
-                points = gpd.read_file('maps/sumsel.min.topojson')
-            if values == "Indonesia":
-                points = gpd.read_file('maps/idns.min.topojson')
+                    points = gpd.read_file('maps/sumsel.min.topojson')
+                if values == "Indonesia":
+                    points = gpd.read_file('maps/idns.min.topojson')
 
 
-            # Get x and y coordinates for each point
-            # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
-            # points_gjson.add_to(m)
+                # Get x and y coordinates for each point
+                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+                # points_gjson.add_to(m)
 
-            # Get x and y coordinates for each point
-            points["x"] = points["geometry"].x
-            points["y"] = points["geometry"].y
+                # Get x and y coordinates for each point
+                points["x"] = points["geometry"].x
+                points["y"] = points["geometry"].y
 
-            # Create a list of coordinate pairs
-            locations = list(zip(points["y"], points["x"]))
+                # Create a list of coordinate pairs
+                locations = list(zip(points["y"], points["x"]))
 
-            # Create a folium marker cluster
-            fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
+                # Create a folium marker cluster
+                fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
 
-            fast_marker_cluster.add_to(m)
+                fast_marker_cluster.add_to(m)
 
 
             # draw maps
