@@ -164,16 +164,17 @@ with (main_cl):
                 values = st.select_slider(
                     'Pilih Wilayah Administrasi Altair', options=["Kota Palembang", "Provinsi Sumsel", "Indonesia"])
             if values == "Kota Palembang":
-                    df1 = gpd.read_file('maps/palembang50.min.topojson')
+                    # df1 = gpd.read_file('maps/palembang50.min.topojson')
+                    #
+                    # df1['lon'] = df1.geometry.x  # extract longitude from geometry
+                    # df1['lat'] = df1.geometry.y  # extract latitude from geometry
+                    # df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
+                    #
+                    # firms_pl = pd.DataFrame(
+                    #     df1,
+                    #     columns=['lat', 'lon'])
 
-                    df1['lon'] = df1.geometry.x  # extract longitude from geometry
-                    df1['lat'] = df1.geometry.y  # extract latitude from geometry
-                    df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
-
-                    firms_pl = pd.DataFrame(
-                        df1,
-                        columns=['lat', 'lon'])
-
+                    firms_pl = pd.read_csv('maps/palembang50.csv')
                     bubbletext = [{"text":"2142","lat":-3.47,"lon":105.96}]
 
 
@@ -190,7 +191,7 @@ with (main_cl):
                             pdk.Layer(
                                 'ScatterplotLayer',
                                 data=firms_pl,
-                                get_position='[lon, lat]',
+                                get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
                                 get_radius=300,
                             ),
@@ -212,15 +213,17 @@ with (main_cl):
                     ))
 
             if values == "Provinsi Sumsel":
-                    df1 = gpd.read_file('maps/sumsel.min.topojson')
+                    # df1 = gpd.read_file('maps/sumsel.min.topojson')
+                    #
+                    # df1['lon'] = df1.geometry.x  # extract longitude from geometry
+                    # df1['lat'] = df1.geometry.y  # extract latitude from geometry
+                    # df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
+                    #
+                    # firms_pl = pd.DataFrame(
+                    #     df1,
+                    #     columns=['lat', 'lon'])
 
-                    df1['lon'] = df1.geometry.x  # extract longitude from geometry
-                    df1['lat'] = df1.geometry.y  # extract latitude from geometry
-                    df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
-
-                    firms_pl = pd.DataFrame(
-                        df1,
-                        columns=['lat', 'lon'])
+                    firms_pl = pd.read_csv('maps/sumsel.csv')
 
                     bubbletext = [{"text": "15848", "lat": -3.47, "lon": 106.139}]
 
@@ -237,7 +240,7 @@ with (main_cl):
                             pdk.Layer(
                                 'ScatterplotLayer',
                                 data=firms_pl,
-                                get_position='[lon, lat]',
+                                get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
                                 get_radius=300,
                             ),
@@ -259,15 +262,18 @@ with (main_cl):
                     ))
 
             if values == "Indonesia":
-                    df1 = gpd.read_file('maps/idns.min.topojson')
+                    # df1 = gpd.read_file('maps/idns.min.topojson')
+                    #
+                    # df1['lon'] = df1.geometry.x  # extract longitude from geometry
+                    # df1['lat'] = df1.geometry.y  # extract latitude from geometry
+                    # df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
+                    #
+                    #
+                    # firms_pl = pd.DataFrame(
+                    #     df1,
+                    #     columns=['lat', 'lon'])
 
-                    df1['lon'] = df1.geometry.x  # extract longitude from geometry
-                    df1['lat'] = df1.geometry.y  # extract latitude from geometry
-                    df1 = df1[['lon', 'lat']]  # only keep longitude and latitude
-
-                    firms_pl = pd.DataFrame(
-                        df1,
-                        columns=['lat', 'lon'])
+                    firms_pl = pd.read_csv('maps/idn.csv')
                     bubbletext = [{"text":"78759", "lat":-4.08, "lon":117.5}]
 
                     st.pydeck_chart(pdk.Deck(
@@ -283,7 +289,7 @@ with (main_cl):
                             pdk.Layer(
                                 'ScatterplotLayer',
                                 data=firms_pl,
-                                get_position='[lon, lat]',
+                                get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
                              get_radius=300,
                             ),
@@ -300,9 +306,11 @@ with (main_cl):
                                 get_position='[lon, lat]',
                                 gettext='[text]',
                                 getSize=12
+
                             ),
-                        ],
-                    ))
+                        ],tooltip= {"text":"{firms_pl[0]}"}
+                      )
+                    )
 
 
         with tab1d:
@@ -320,53 +328,41 @@ with (main_cl):
 
             # draw map
             m = folium.Map(location=[-3.1940, 117.5540],
-                               tiles = 'cartodbdarkmatter',
-                               zoom_start=2,
-                               control_scale=True)
+                           tiles='cartodbdarkmatter',
+                           zoom_start=2,
+                           control_scale=True)
 
-
-            if st.checkbox("Tampilkan Hotspot",value=False):
-                col1, col2 = st.columns([1,1])
+            if st.checkbox("Tampilkan Hotspot", value=False):
+                col1, col2 = st.columns([1, 1])
                 with col1:
                     values = st.select_slider(
                         'Pilih Wilayah Administrasi Folium', options=["Kota Palembang", "Provinsi Sumsel", "Indonesia"])
-                if values == "Kota Palembang":
-                    # draw map
-                    m = folium.Map(location=[-2.9831,104.7527],
-                                   tiles='cartodbdarkmatter',
-                                   zoom_start=7,
-                                   control_scale=True)
-                    # Add marker cluster to map
-                    points = gpd.read_file('maps/palembang50.min.topojson')
-                if values == "Provinsi Sumsel":
-                    m = folium.Map(location=[-2.9357, 104.4177],
-                                   tiles='cartodbdarkmatter',
-                                   zoom_start=5,
-                                   control_scale=True)
-                    points = gpd.read_file('maps/sumsel.min.topojson')
-                if values == "Indonesia":
-                    points = gpd.read_file('maps/idns.min.topojson')
+                    if values == "Kota Palembang":
+                        # draw map
+                        m = folium.Map(location=[-2.9831, 104.7527],
+                                       tiles='cartodbdarkmatter',
+                                       zoom_start=7,
+                                       control_scale=True)
+                        # Read CSV file
+                        points = pd.read_csv('maps/palembang50.csv')
+                    if values == "Provinsi Sumsel":
+                        m = folium.Map(location=[-2.9357, 104.4177],
+                                       tiles='cartodbdarkmatter',
+                                       zoom_start=5,
+                                       control_scale=True)
+                        points = pd.read_csv('maps/sumsel.csv')
+                    if values == "Indonesia":
+                        points = pd.read_csv('maps/idn.csv')
 
+                    # Extract latitude and longitude columns
+                    locations = list(zip(points["Latitude"], points["Longitude"]))
 
-                # Get x and y coordinates for each point
-                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
-                # points_gjson.add_to(m)
-
-                # Get x and y coordinates for each point
-                points["x"] = points["geometry"].x
-                points["y"] = points["geometry"].y
-
-                # Create a list of coordinate pairs
-                locations = list(zip(points["y"], points["x"]))
-
-                # Create a folium marker cluster
-                fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
-
-                fast_marker_cluster.add_to(m)
-
+                    # Create a folium marker cluster
+                    fast_marker_cluster = FastMarkerCluster(locations, callback=callback, control=True)
+                    fast_marker_cluster.add_to(m)
 
             # draw maps
-            st_folium(m,height=450, use_container_width=True)
+            st_folium(m, height=450, use_container_width=True)
 
 
         with st.expander("Analisis Peta"):
