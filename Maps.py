@@ -344,13 +344,13 @@ with (main_cl):
                                        zoom_start=7,
                                        control_scale=True)
                         # Read CSV file
-                        points = pd.read_csv('maps/palembang50.csv')
+                        points = pd.read_csv('maps/palembang50fol.csv')
                     if values == "Provinsi Sumsel":
                         m = folium.Map(location=[-2.9357, 104.4177],
                                        tiles='cartodbdarkmatter',
                                        zoom_start=5,
                                        control_scale=True)
-                        points = pd.read_csv('maps/sumsel.csv')
+                        points = pd.read_csv('maps/sumselfol.csv')
                     if values == "Indonesia":
                         points = pd.read_csv('maps/idn.csv')
 
