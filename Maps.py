@@ -362,7 +362,7 @@ with (main_cl):
                     fast_marker_cluster.add_to(m)
 
             # draw maps
-            st_folium(m, height=450, use_container_width=True)
+        st_folium(m, height=450, use_container_width=True)
 
 
         with st.expander("Analisis Peta"):
