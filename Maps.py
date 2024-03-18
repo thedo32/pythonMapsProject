@@ -6,6 +6,7 @@ from streamlit_float import *
 import altair as alt
 import pandas as pd
 import plotly.express as px
+from folium.plugins import MarkerCluster
 from folium.plugins import FastMarkerCluster
 from streamlit_folium import st_folium
 import fungsi as fu
@@ -68,7 +69,7 @@ with (main_cl):
                     unsafe_allow_html=True)
 
         #tab untuk peta 3 wilayah administrasi
-        tab1a, tab1b, tab1c, tab1d= st.tabs(['Indonesia Bubble','Pyplot','Altair Pydeck', 'Folium'])
+        tab1a, tab1b, tab1c, tab1d, tab1e = st.tabs(['Indonesia Bubble','Pyplot','Altair Pydeck', 'Folium', "Folium with Popup"])
         with tab1a:
             df = pd.read_csv('maps/idn_hs_by_prov.csv')
             # Create the choropleth bubble map
@@ -362,7 +363,53 @@ with (main_cl):
                     fast_marker_cluster.add_to(m)
 
             # draw maps
-        st_folium(m, height=450, use_container_width=True)
+            st_folium(m, height=450, use_container_width=True,key=123)
+
+        with tab1e:
+            # draw basemap
+            m = folium.Map(location=[-3.1940, 117.5540],
+                           tiles='cartodbdarkmatter',
+                           zoom_start=2, control_scale=True)
+
+            if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False):
+                col1, col2 = st.columns([1, 1])
+                with col1:
+                    values = st.select_slider(
+                        'Pilih Wilayah Administrasi Folium Popup', options=["Kota Palembang", "Provinsi Sumsel", "Indonesia"])
+                    if values == "Kota Palembang":
+                        # draw map
+                        m = folium.Map(location=[-2.9831, 104.7527],
+                                       tiles='cartodbdarkmatter',
+                                       zoom_start=7,
+                                       control_scale=True)
+                        # Read CSV file
+                        points = pd.read_csv('maps/palembang50fol.csv')
+                    if values == "Provinsi Sumsel":
+                        m = folium.Map(location=[-2.9357, 104.4177],
+                                       tiles='cartodbdarkmatter',
+                                       zoom_start=5,
+                                       control_scale=True)
+                        points = pd.read_csv('maps/sumselfol.csv')
+                    if values == "Indonesia":
+                        points = pd.read_csv('maps/idns.csv')
+
+
+                # Get x and y coordinates for each point
+                # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
+                # points_gjson.add_to(m)
+                # Get x and y coordinates for each point
+                #points = pd.read_csv('maps/idns.csv')
+
+                # Extract latitude and longitude columns
+                marker_cluster = MarkerCluster(callback=callback)
+                for _, row in points.iterrows():
+                    popup = f"Latitude: {row['Latitude']}<br>Longitude: {row['Longitude']}"
+                    folium.Marker([row['Latitude'], row['Longitude']], popup=popup).add_to(marker_cluster)
+
+                marker_cluster.add_to(m)
+
+            # Add maps to streamlit
+            st_folium(m, height=450, use_container_width=True)
 
 
         with st.expander("Analisis Peta"):
