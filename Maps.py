@@ -195,6 +195,7 @@ with (main_cl):
                                 get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
                                 get_radius=300,
+                                pickable=True,
                             ),
                             pdk.Layer(
                                 'ScatterplotLayer',
@@ -244,6 +245,7 @@ with (main_cl):
                                 get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
                                 get_radius=300,
+                                pickable=True,
                             ),
                             pdk.Layer(
                                 'ScatterplotLayer',
@@ -292,6 +294,7 @@ with (main_cl):
                                 data=firms_pl,
                                 get_position='[Longitude, Latitude]',
                                 get_color='[91, 163, 207, 200]',
+                                pickable=True,
                              get_radius=300,
                             ),
                             pdk.Layer(
@@ -363,7 +366,7 @@ with (main_cl):
                     fast_marker_cluster.add_to(m)
 
             # draw maps
-            st_folium(m, height=450, use_container_width=True,key=123)
+            st.write(st_folium(m, height=450, use_container_width=True,key=123))
 
         with tab1e:
             # draw basemap
@@ -409,7 +412,7 @@ with (main_cl):
                 marker_cluster.add_to(m)
 
             # Add maps to streamlit
-            st_folium(m, height=450, use_container_width=True)
+            st.write(st_folium(m, height=450, use_container_width=True))
 
 
         with st.expander("Analisis Peta"):

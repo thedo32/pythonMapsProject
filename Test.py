@@ -39,4 +39,4 @@ for _, row in points.iterrows():
 marker_cluster.add_to(m)
 
 # Add maps to streamlit
-st_folium(m, height=450, use_container_width=True)
+st.write(st_folium(m, height=450, use_container_width=True))
