@@ -40,9 +40,10 @@ if uploaded_file1 is not None:
                 alt.Color("Persentase:O").legend(None),
                 alt.Theta("count(Value):Q", title="Jumlah Hari").stack(True),
                 # color=alt.Color("max(Color)", scale=None)
-        ).properties(height=280, width=280).interactive()
+        ).properties(height=300, width=300).interactive()
 
-        text = base.mark_text(radius=125, size=11).encode(text="Status:N")
+        text = base.mark_text(radius=138, size=11).encode(text="Status:N")
+        st.markdown("<br>", unsafe_allow_html=True)
         st.altair_chart(base + text, use_container_width=False)
 
 uploaded_file2 = st.file_uploader("Pilih spatial dataframe", key=345)
