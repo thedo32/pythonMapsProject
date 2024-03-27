@@ -32,7 +32,7 @@ if uploaded_file1 is not None:
             y="Status:O",
             x=alt.X("count(Value):Q", title="Jumlah Hari"),
             color=alt.Color("max(Color):N", scale=None)
-        ).properties(height=180, width=500).interactive()
+        ).properties(height=180, width=360).interactive()
         st.altair_chart(bars)
 
     if st.checkbox('Tampilkan Presentase', value=False):
