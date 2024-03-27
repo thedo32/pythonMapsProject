@@ -40,7 +40,7 @@ if uploaded_file1 is not None:
                 alt.Color("Persentase:O").legend(None),
                 alt.Theta("count(Value):Q", title="Jumlah Hari").stack(True),
                 # color=alt.Color("max(Color)", scale=None)
-        ).properties(height=300, width=300).interactive()
+        ).properties(height=290, width=290).interactive()
 
         text = base.mark_text(radius=138, size=11).encode(text="Status:N")
         st.markdown("<br>", unsafe_allow_html=True)
