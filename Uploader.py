@@ -36,14 +36,13 @@ if uploaded_file1 is not None:
         st.altair_chart(bars)
 
     if st.checkbox('Tampilkan Presentase', value=False):
-        base = alt.Chart(df0).mark_arc(innerRadius=50, outerRadius=105).encode(
+        base = alt.Chart(df0).mark_arc(innerRadius=50, outerRadius=95).encode(
                 alt.Color("Persentase:O").legend(None),
                 alt.Theta("count(Value):Q", title="Jumlah Hari").stack(True),
                 # color=alt.Color("max(Color)", scale=None)
-        ).properties(height=290, width=290).interactive()
+        ).properties(height=360, width=360).interactive()
 
         text = base.mark_text(radius=138, size=11).encode(text="Status:N")
-        st.markdown("<br>", unsafe_allow_html=True)
         st.altair_chart(base + text, use_container_width=False)
 
 uploaded_file2 = st.file_uploader("Pilih spatial dataframe", key=345)
