@@ -1,4 +1,5 @@
 import streamlit as st
+import altair as alt
 from io import StringIO
 import folium
 from streamlit_float import *
@@ -7,14 +8,51 @@ from folium.plugins import MarkerCluster
 from streamlit_folium import st_folium
 
 
-uploaded_file = st.file_uploader("Choose a file")
-if uploaded_file is not None:
+
+
+
+uploaded_file1 = st.file_uploader("Pilih tabular dataframe", key=123)
+if uploaded_file1 is not None:
     # To read file as bytes:
-    bytes_data = uploaded_file.getvalue()
+    bytes_data = uploaded_file1.getvalue()
     #st.write(bytes_data)
 
     # To convert to a string based IO:
-    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    stringio = StringIO(uploaded_file1.getvalue().decode("utf-8"))
+    #st.write(stringio)
+
+    # To read file as string:
+    string_data = stringio.read()
+    #st.write(string_data)
+
+    df0 = pd.read_csv(uploaded_file1)
+
+    if st.checkbox('Tampilkan Diagram', value=False):
+        bars = alt.Chart(df0).mark_bar(size=25).encode(
+            y="Status:O",
+            x=alt.X("count(Value):Q", title="Jumlah Hari"),
+            color=alt.Color("max(Color):N", scale=None)
+        ).properties(height=200, width=800).interactive()
+        st.altair_chart(bars)
+
+    if st.checkbox('Tampilkan Presentase', value=False):
+        base = alt.Chart(df0).mark_arc(innerRadius=50, outerRadius=105).encode(
+                alt.Color("Persentase:O").legend(None),
+                alt.Theta("count(Value):Q", title="Jumlah Hari").stack(True),
+                # color=alt.Color("max(Color)", scale=None)
+        ).properties(height=300, width=300).interactive()
+
+        text = base.mark_text(radius=148, size=12).encode(text="Status:N")
+        st.altair_chart(base + text, use_container_width=True)
+
+uploaded_file2 = st.file_uploader("Pilih spatial dataframe", key=345)
+if uploaded_file2 is not None:
+    # To read file as bytes:
+    bytes_data = uploaded_file2.getvalue()
+    #st.write(bytes_data)
+
+    # To convert to a string based IO:
+    stringio = StringIO(uploaded_file2.getvalue().decode("utf-8"))
     #st.write(stringio)
 
     # To read file as string:
@@ -30,7 +68,7 @@ if uploaded_file is not None:
                    zoom_start=2, control_scale=True)
 
     if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading"):
-        points = pd.read_csv(uploaded_file)
+        points = pd.read_csv(uploaded_file2)
 
         # Get x and y coordinates for each point
         # points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
@@ -49,3 +87,5 @@ if uploaded_file is not None:
     # Add maps to streamlit
         st.write("Jumlah Hotspot: " + str(len(points)))
     st_folium(m, height=450, use_container_width=True)
+
+
