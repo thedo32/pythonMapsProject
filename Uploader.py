@@ -43,7 +43,7 @@ if uploaded_file1 is not None:
         ).properties(height=280, width=280).interactive()
 
         text = base.mark_text(radius=125, size=11).encode(text="Status:N")
-        st.altair_chart(base + text, use_container_width=True)
+        st.altair_chart(base + text, use_container_width=False)
 
 uploaded_file2 = st.file_uploader("Pilih spatial dataframe", key=345)
 if uploaded_file2 is not None:
