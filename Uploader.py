@@ -40,7 +40,7 @@ if uploaded_file1 is not None:
                 alt.Color("Persentase:O").legend(None),
                 alt.Theta("count(Value):Q", title="Jumlah Hari").stack(True),
                 # color=alt.Color("max(Color)", scale=None)
-        ).properties(height=300, width=300).interactive()
+        ).properties(height=280, width=280).interactive()
 
         text = base.mark_text(radius=148, size=11).encode(text="Status:N")
         st.altair_chart(base + text, use_container_width=True)
