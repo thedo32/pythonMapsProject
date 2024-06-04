@@ -225,7 +225,7 @@ with (main_cl):
                            attr='TomTom',
                            zoom_start=2, control_scale=True)
 
-            if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False, disabled=True):
+            if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False, disabled=False):
                 col1, col2 = st.columns([1, 1])
                 with col1:
                     values = st.select_slider(
