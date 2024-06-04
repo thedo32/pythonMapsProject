@@ -4,6 +4,8 @@ import geopandas as gpd
 import pydeck as pdk
 from streamlit_float import *
 import altair as alt
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import plotly.express as px
 from folium.plugins import MarkerCluster
@@ -43,9 +45,9 @@ st.subheader('Peta Sebaran Hotspot Kebakaran Hutan Lahan Bulan Oktober 2023')
 
 left_cl, main_cl= st.columns([1,8])
 with left_cl:
-     containup = st.container()
-     containup.float()
-     containup.markdown("[↗️⬆️↖️](#pendahuluan)", unsafe_allow_html=True)
+     # containup = st.container()
+     # containup.float()
+     # containup.markdown("[↗️⬆️↖️](#pendahuluan)", unsafe_allow_html=True)
      with st.container(border=True):
         # st.image("img/free_palestine.png")
         st.markdown("<br>", unsafe_allow_html=True)
@@ -192,7 +194,9 @@ with (main_cl):
             """
 
             m = folium.Map(location=[-3.1940, 117.5540],
-                           tiles='cartodbdarkmatter',
+                           tiles= 'http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+                                  'tileSize=512&key=e67b6e8b-2dc9-4a67-8d82-8c4ad6a8b3cc',
+                           attr='TomTom',
                            zoom_start=2,
                            control_scale=True)
 
@@ -217,7 +221,9 @@ with (main_cl):
         with tab1e:
             # draw basemap
             m = folium.Map(location=[-3.1940, 117.5540],
-                           tiles='cartodbdarkmatter',
+                           tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+                                  'tileSize=512&key=e67b6e8b-2dc9-4a67-8d82-8c4ad6a8b3cc',
+                           attr='TomTom',
                            zoom_start=2, control_scale=True)
 
             if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False, disabled=True):
