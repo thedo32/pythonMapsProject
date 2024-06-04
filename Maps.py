@@ -193,8 +193,8 @@ with (main_cl):
             """
 
             m = folium.Map(location=[-3.1940, 117.5540],
-                           tiles= 'http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
-                                  'tileSize=512&key=e67b6e8b-2dc9-4a67-8d82-8c4ad6a8b3cc',
+                           tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+                                 'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
                            attr='TomTom',
                            zoom_start=2,
                            control_scale=True)
@@ -220,10 +220,9 @@ with (main_cl):
         with tab1e:
             # draw basemap
             m = folium.Map(location=[-3.1940, 117.5540],
-                           #tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
-                           #       'tileSize=512&key=e67b6e8b-2dc9-4a67-8d82-8c4ad6a8b3cc',
-                           #attr='TomTom',
-                           tiles='cartodbdarkmatter',
+                           tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+                                 'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
+                           attr='TomTom',
                            zoom_start=2, control_scale=True)
 
             if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False, disabled=False):
