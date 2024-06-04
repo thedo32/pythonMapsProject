@@ -12,6 +12,11 @@ from folium.plugins import FastMarkerCluster
 from streamlit_folium import st_folium
 import fungsi as fu
 
+import numpy as np
+
+
+
+
 st.set_page_config(
     page_title = "Hotspot Kebakaran Lahan Hutan dan Polusi Udara",
     page_icon="fishtail.png",
@@ -193,11 +198,20 @@ with (main_cl):
             """
 
             m = folium.Map(location=[-3.1940, 117.5540],
-                           tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+
+                           tiles='http://{s}.api.tomtom.com/map/1/tile/sat/main/{z}/{x}/{y}.jpg?'
                                  'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
                            attr='TomTom',
-                           zoom_start=2,
+                           zoom_start=3,
                            control_scale=True)
+
+            folium.raster_layers.TileLayer(
+                tiles='http://{s}.api.tomtom.com/map/1/tile/labels/night/{z}/{x}/{y}.png?'
+                      'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
+                attr='TomTom',
+            ).add_to(m)
+
+
 
             if st.checkbox("Tampilkan Hotspot", value=False):
                 col1, col2 = st.columns([1, 1])
@@ -215,15 +229,40 @@ with (main_cl):
                 fast_marker_cluster.add_to(m)
 
                 # draw maps
+
+            image = np.zeros((61, 61))
+            image[0, :] = 1.0
+            image[60, :] = 1.0
+            image[:, 0] = 1.0
+            image[:, 60] = 1.0
+
+            folium.raster_layers.ImageOverlay(
+                image=image,
+                bounds=[[0, -60], [60, 60]],
+                colormap=lambda x: (1, 0, 0, x),
+            ).add_to(m)
+
+
+
             st_folium(m, height=450, use_container_width=True,key=123)
+
 
         with tab1e:
             # draw basemap
+
             m = folium.Map(location=[-3.1940, 117.5540],
-                           tiles='http://{s}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?'
+
+                           tiles='http://{s}.api.tomtom.com/map/1/tile/sat/main/{z}/{x}/{y}.jpg?'
                                  'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
                            attr='TomTom',
-                           zoom_start=2, control_scale=True)
+                           zoom_start=2,
+                           control_scale=True)
+
+            folium.raster_layers.TileLayer(
+                tiles='http://{s}.api.tomtom.com/map/1/tile/labels/night/{z}/{x}/{y}.png?'
+                      'view=Unified&key=1s6goFp1aKAsD6yevSYzur1dPu67E8Qh',
+                attr='TomTom',
+            ).add_to(m)
 
             if st.checkbox("Tampilkan Hotspot? Don't bother, make or order your coffee while loading", value=False, disabled=False):
                 col1, col2 = st.columns([1, 1])
