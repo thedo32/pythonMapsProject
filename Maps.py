@@ -4,7 +4,6 @@ import geopandas as gpd
 import pydeck as pdk
 from streamlit_float import *
 import altair as alt
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
