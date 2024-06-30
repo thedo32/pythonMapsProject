@@ -1,42 +1,32 @@
-import altair as alt
-import folium
-import pandas as pd
-from folium.plugins import MarkerCluster
-import plotly.express as px
-import pydeck as pdk
-from folium.plugins import FastMarkerCluster
-from streamlit_float import *
-from streamlit_folium import st_folium
+import streamlit as st
+from streamlit_js_eval import streamlit_js_eval, copy_to_clipboard, create_share_link, get_geolocation
+import json
 
-callback = """\
-                            function (row) {
-                                    var icon, marker;
-                                    icon = L.AwesomeMarkers.icon({
-                                        icon: "fire", iconColor: "#86BCDC", iconSize: [5,5]});
-                                    marker = L.marker(new L.LatLng(row[0], row[1]) );
-                                    marker.setIcon(icon);
-                                    return marker;
-                            };
-                            """
+st.write(
+    f"User agent is _{streamlit_js_eval(js_expressions='window.navigator.userAgent', want_output=True, key='UA')}_")
 
-# draw basemap
-m = folium.Map(location=[-3.1940, 117.5540],
-                               tiles = 'cartodbdarkmatter',
-                               zoom_start=2, control_scale=True)
+st.write(f"Screen width is _{streamlit_js_eval(js_expressions='screen.width', want_output=True, key='SCR')}_")
 
-# Get x and y coordinates for each point
-# points_gjson = folium.features.GeoJson(points, name="Hotspot Indonesia")
-# points_gjson.add_to(m)
-# Get x and y coordinates for each point
-points = pd.read_csv('maps/idns.csv')
+st.write(
+    f"Browser language is _{streamlit_js_eval(js_expressions='window.navigator.language', want_output=True, key='LANG')}_")
 
-# Extract latitude and longitude columns
-marker_cluster = MarkerCluster(callback=callback)
-for _, row in points.iterrows():
-       popup = f"Latitude: {row['Latitude']}<br>Longitude: {row['Longitude']}"
-       folium.Marker([row['Latitude'], row['Longitude']], popup=popup).add_to(marker_cluster)
+st.write(
+    f"Page location is _{streamlit_js_eval(js_expressions='window.location.origin', want_output=True, key='LOC')}_")
 
-marker_cluster.add_to(m)
+# Copying to clipboard only works with a HTTP connection
 
-# Add maps to streamlit
-st.write(st_folium(m, height=450, use_container_width=True))
+copy_to_clipboard("Text to be copied!", "Copy something to clipboard (only on HTTPS)", "Successfully copied",
+                  component_key="CLPBRD")
+
+# Share something using the sharing API
+create_share_link(dict(
+    {'title': 'streamlit-js-eval', 'url': 'https://github.com/aghasemi/streamlit_js_eval', 'text': "A description"}),
+                  "Share a URL (only on mobile devices)", 'Successfully shared', component_key='shdemo')
+
+if st.checkbox("Check my location"):
+    loc = get_geolocation()
+    st.write(f"Your coordinates are {loc}")
+
+if True:
+    x = streamlit_js_eval(js_expressions='window.innerWidth', key='WIDTH', want_output=True, )
+    st.write(f"Width is {x}")

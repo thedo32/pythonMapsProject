@@ -16,7 +16,6 @@ import numpy as np
 
 
 
-
 st.set_page_config(
     page_title = "Hotspot Kebakaran Lahan Hutan dan Polusi Udara",
     page_icon="fishtail.png",

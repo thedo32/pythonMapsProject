@@ -3,6 +3,7 @@ import geopy.distance
 import csv
 import geojson
 import streamlit as st
+import fungsi as fu
 
 @st.cache_resource
 
@@ -49,7 +50,7 @@ def format_big_number(num):
 
 def wilayah_admin(wilayah):
     if wilayah == "Kota Palembang":
-        return pd.read_csv('maps/palembang50.csv'), [{"text": "2142", "lat": -3.47, "lon": 105.96, "radius": 6000}], 8, -2.9831, 104.7527
+        return pd.read_csv('maps/dataoutlet.csv'), [{"text": "2142", "lat": -3.47, "lon": 105.96, "radius": 6000}], 8, -2.9831, 104.7527
     elif wilayah == "Provinsi Sumsel":
         return pd.read_csv('maps/sumsel.csv'), [{"text": "15848", "lat": -3.47, "lon": 106.139, "radius": 12000}],7, -2.9357, 104.4177
     elif wilayah == "Indonesia":
