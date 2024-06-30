@@ -2,6 +2,12 @@ import pandas as pd
 import streamlit as st
 from streamlit_float import *
 import plotly.express as px
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
+
 
 @st.cache_resource
 def addmap(lat, lon,zm,fn):
@@ -11,7 +17,7 @@ def addmap(lat, lon,zm,fn):
     df["OUTLET_LATITUDE"] = pd.to_numeric(df["OUTLET_LATITUDE"])
     df["OUTLET_LONGITUDE"] = pd.to_numeric(df["OUTLET_LONGITUDE"])
 
-    px.set_mapbox_access_token("pk.eyJ1IjoidGhlZG8zMiIsImEiOiJjbHMxbGRvaDEwYm5yMmtxeGZjenJ1ZnplIn0.HrgG-gRUV-3r4A0qv_Ozaw")
+    px.set_mapbox_access_token(MAPBOX_TOKEN)
 
     fig = px.scatter_mapbox(
         df,
@@ -46,7 +52,7 @@ def addmapcluster(lat, lon,zm,fn):
     df["OUTLET_LATITUDE"] = pd.to_numeric(df["OUTLET_LATITUDE"])
     df["OUTLET_LONGITUDE"] = pd.to_numeric(df["OUTLET_LONGITUDE"])
 
-    px.set_mapbox_access_token("pk.eyJ1IjoidGhlZG8zMiIsImEiOiJjbHMxbGRvaDEwYm5yMmtxeGZjenJ1ZnplIn0.HrgG-gRUV-3r4A0qv_Ozaw")
+    px.set_mapbox_access_token(MAPBOX_TOKEN)
 
     fig = px.scatter_mapbox(
         df,
@@ -82,8 +88,7 @@ def addmapkotakab(lat, lon,zm,fn):
     df["OUTLET_LATITUDE"] = pd.to_numeric(df["OUTLET_LATITUDE"])
     df["OUTLET_LONGITUDE"] = pd.to_numeric(df["OUTLET_LONGITUDE"])
 
-    px.set_mapbox_access_token("pk.eyJ1IjoidGhlZG8zMiIsImEiOiJjbHMxbGRvaDEwYm5yMmtxeGZjenJ1ZnplIn0.HrgG-gRUV-3r4A0qv_Ozaw")
-
+    px.set_mapbox_access_token(MAPBOX_TOKEN)
     fig = px.scatter_mapbox(
         df,
         lat="OUTLET_LATITUDE",

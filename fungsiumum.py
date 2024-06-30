@@ -7,6 +7,11 @@ import networkx as nx
 import osmnx as ox
 import taxicab as tc
 import googlemaps
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 
 @st.cache_resource
@@ -47,7 +52,7 @@ def addDistanceosm(lat1, lon1, lat2, lon2):
 
 def addDistancegmaps(lat1, lon1, lat2, lon2):
     # Requires API key
-    gmaps = googlemaps.Client(key='AIzaSyC6mNzcuvK0NWcOgcFqseB8jIGfuzaoG3s')
+    gmaps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
     distance = gmaps.distance_matrix([[lat1, lon1]], [[lat2, lon2]], mode="driving")['rows'][0]['elements'][0]
     addedDistance = distance["distance"]["text"]
     return addedDistance
