@@ -92,11 +92,11 @@ def format_big_number(num):
 
 def wilayah_admin(wilayah):
     if wilayah == "Brand Outlets Branch":
-        return pd.read_csv('maps/dataoutlet.csv'), [
+        return pd.read_csv('maps/dataoutletskabclips.csv'), [
             {"text": "2142", "lat": -3.47, "lon": 105.96, "radius": 6000}], 8, 0.5072459760797242, 101.44711771077857
     elif wilayah == "Brand Outlets Subdist":
-        return pd.read_csv('maps/dataoutlet.csv'), [
+        return pd.read_csv('maps/dataoutletskabclips.csv'), [
             {"text": "15848", "lat": -3.47, "lon": 106.139, "radius": 12000}], 7, 0.5072459760797242, 101.44711771077857
     elif wilayah == "Indonesia":
-        return pd.read_csv('maps/dataoutlet.csv'), [
+        return pd.read_csv('maps/dataoutletskabclips.csv'), [
             {"text": "6194", "lat": -4, "lon": 117.5, "radius": 85000}], 3.7, -4, 117.5
