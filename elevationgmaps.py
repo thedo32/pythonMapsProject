@@ -16,7 +16,7 @@ def get_elevation_google(lat, lon, api_key):
 
 
 # Example Usage:
-API_KEY = "AIzaSyDy5Xft5l8Wu0b2NtGlyRiHPb7IohBD-GE"  # Replace with your Google API key
+API_KEY = 'xxxxxx'  # Replace with your Google API key
 
 
 
