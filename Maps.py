@@ -10,9 +10,11 @@ import plotly.express as px
 from folium.plugins import MarkerCluster
 from folium.plugins import FastMarkerCluster
 from streamlit_folium import st_folium
+import numpy as np
+from geopy.geocoders import Nominatim
+
 import fungsi as fu
 
-import numpy as np
 
 
 
@@ -103,25 +105,31 @@ with (main_cl):
                 values = st.select_slider(
                     'Pilih Wilayah Administrasi Pyplot', options=["Kota Palembang","Provinsi Sumsel","Indonesia"])
 
-            df = fu.wilayah_admin(values)
+            # Get dataset
+            df, zoom, center_lat, center_lon = fu.wilayah_admin_geo(values)
 
-            # Create the choropleth bubble map
-            fig = px.scatter_mapbox(
-                df[0],
-                lat="Latitude",
-                lon="Longitude",
-                size="Jumlah",  # Bubble size based on the "count" attribute
-                mapbox_style="carto-darkmatter",  # Choose a suitable projection
-                labels={"Jumlah": "Jumlah (Total di Bubble Besar x100)"},
-                # hover_name="prov",  # Display count on hover
-                color_discrete_sequence=["#5BA3CF"],  # Customize bubble color
-                height=600,
-                zoom=df[2],
-                center=dict(lat=df[3],lon=df[4]),  # this will center on the point
+            if df is not None:
+                # Add geolocation information
+                df["Location"] = df.apply(lambda row: fu.get_location(row["Latitude"], row["Longitude"],values), axis=1)
+
+                # Create the choropleth bubble map
+                fig = px.scatter_mapbox(
+                    df,
+                    lat="Latitude",
+                    lon="Longitude",
+                    size="Jumlah",
+                    mapbox_style="carto-darkmatter",
+                    labels={"Jumlah": "Jumlah (Total di Bubble Besar x100)"},
+                    hover_name="Location",  # Display geolocation in hover
+                    hover_data={"Latitude": True, "Longitude": True, "Jumlah": True},  # Show additional info
+                    color_discrete_sequence=["#5BA3CF"],
+                    height=600,
+                    zoom=zoom,
+                    center=dict(lat=center_lat, lon=center_lon),
                 )
 
-            # Show the map
-            st.plotly_chart(fig, use_container_width=True)
+                # Show the map
+                st.plotly_chart(fig, use_container_width=True)
 
 
 
