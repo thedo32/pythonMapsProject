@@ -79,8 +79,8 @@ def wilayah_admin(wilayah):
 # Function to get location using Google Maps API
 def get_location(lat, lon,wilayah):
 
-    # Replace with your actual Google API Key
-    API_KEY = "AIzaSyC6mNzcuvK0NWcOgcFqseB8jIGfuzaoG3s"
+
+    API_KEY = "xxxxx"  # Replace with your actual Google API Key
     gmaps = googlemaps.Client(key=API_KEY)
 
     if wilayah == "Kota Palembang":
