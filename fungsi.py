@@ -7,6 +7,7 @@ import geojson
 import streamlit as st
 import googlemaps
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
@@ -79,8 +80,8 @@ def wilayah_admin(wilayah):
 # Function to get location using Google Maps API
 def get_location(lat, lon,wilayah):
 
-
-    API_KEY = "xxxxx"  # Replace with your actual Google API Key
+    load_dotenv()
+    API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")  # Replace with your actual Google API Key
     gmaps = googlemaps.Client(key=API_KEY)
 
     if wilayah == "Kota Palembang":
